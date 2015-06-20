@@ -2,4 +2,4 @@ var jStat = require('jStat').jStat;
 
 
 
-var cor = function
+var cor = function 
