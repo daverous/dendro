@@ -15,9 +15,10 @@ firstDifference : function(array) {
 		
 },
  cor : function (one, two) {
-	var oneVec = jStat.seq(one);
-	var twoVec = jStat.seq(two);
-	return jStat.corrcoeff(oneVec, twoVec);
+//	var oneVec = jStat.seq(one);
+	console.log(one);
+//	var twoVec = jStat.seq(two);
+	return jStat.corrcoeff(one, two);
 }
 
 
