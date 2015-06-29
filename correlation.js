@@ -1,10 +1,10 @@
 var jStat = require('jStat').jStat;
 
 
-module.exports = {
+
 	
 	
-firstDifference : function(array) {
+var firstDifference = function(array) {
 	var n = [];
 	var c = 0;
 	for (var i =1; i< array.length; i++) {
@@ -13,14 +13,20 @@ firstDifference : function(array) {
 	}
 	return n;
 		
-},
- cor : function (one, two) {
-//	var oneVec = jStat.seq(one);
-	console.log(one);
-//	var twoVec = jStat.seq(two);
+};
+
+var correlation = function (one, two) {
 	return jStat.corrcoeff(one, two);
-}
+};
 
+var firstDifferenceAndCor = function(one, two) {
+	one = firstDifference(one);
+	two = firstDifference(two);
+	return correlation(one,two);
+};
 
-
+module.exports = {
+	fd : firstDifference,
+	cor : correlation,
+	fdcor : firstDifferenceAndCor
 };

@@ -4,7 +4,8 @@ var lineReader = require('line-reader');
 
 var endDelim = -9999;
 
-exports.reader = function (file, cb) {
+// First site param is optional
+exports.reader = function (file, cb, firstSite) {
 	var curTreeId = null; // Current ID of tree that is being looked at
 	var treeData = [];
 	var trees = [];
@@ -49,7 +50,10 @@ lineReader.eachLine(file, function(line, last) {
 					treeData.push(Number(actual[i]));	
 			}
 			if (last) {
-				cb(trees);
+				if(firstSite != null)
+					cb(firstSite,trees);
+				else
+					cb(trees);
 			}	
 		});	
 		
