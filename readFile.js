@@ -7,14 +7,17 @@ var endDelim = -9999;
 // First site param is optional
 exports.reader = function (file, cb, firstSite) {
 	var curTreeId = null; // Current ID of tree that is being looked at
-	var treeData = [];
+	var treeData = {};
 	var trees = [];
-	var curTreeStart = 0; 
+	var curTreeCounter = 0; 
+	var curTreeStart = 0;
 lineReader.eachLine(file, function(line, last) {
 			var id = "";		
 		  	for (var i = 0;  i < 8; i++) {
 			  id +=line[i];
-			}		
+			  
+			}
+			id = id.trim();		
 			var rest = line.split(" ");
 			var actual = [];
 			for (var i = 1; i < rest.length; i++) {
@@ -24,7 +27,8 @@ lineReader.eachLine(file, function(line, last) {
 			}				
 			if (curTreeId != id) {
 			curTreeId = id;
-			curTreeStart = actual[0];	
+			curTreeStart = actual[0];
+			curTreeCounter = curTreeStart;
 			}
 			
 			// ACTUAL is now each thing of line apart from tag
@@ -35,8 +39,9 @@ lineReader.eachLine(file, function(line, last) {
 						var toRet = 
 						{
 							id : id,
+							site: file.split('.')[0],
 							start : curTreeStart,
-							cors : [],
+							cors : {},
 							data : treeData	
 						};
 						//Reset params 
@@ -47,7 +52,8 @@ lineReader.eachLine(file, function(line, last) {
 						trees.push(toRet);
 						continue;			
 					}
-					treeData.push(Number(actual[i]));	
+					treeData[curTreeCounter] = Number(actual[i]);	
+					curTreeCounter++;
 			}
 			if (last) {
 				if(firstSite != null)
