@@ -1,5 +1,5 @@
 var jStat = require('jStat').jStat;
-
+var math = require('mathjs');
 
 
 	
@@ -25,8 +25,32 @@ var firstDifferenceAndCor = function(one, two) {
 	return correlation(one,two);
 };
 
+var median = function (site, cb) {
+	var siteCors = {};
+	for (var t in site.trees) { 
+		for (var key in t.cors) {
+			if (! (key in siteCors)) {
+				siteCors[key] = [];
+			}			
+			siteCors[key].push(t.cors[key]);
+		}
+	}
+	var toRet = {};
+	for (key in siteCors) {
+		toRet[key] = math.median(siteCors[key]);	
+	}
+	
+	if (cb) {
+		cb(toRet);
+	}
+	else
+		return toRet;
+};
+
+
 module.exports = {
 	fd : firstDifference,
 	cor : correlation,
-	fdcor : firstDifferenceAndCor
+	fdcor : firstDifferenceAndCor,
+	med : median
 };
