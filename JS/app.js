@@ -1,39 +1,39 @@
-var http = require('http'),
-    inspect = require('util').inspect;
+/*Define dependencies.*/
 
-var Busboy = require('busboy');
+var express=require("express");
+var multer  = require('multer');
+var app=express();
+var done=false;
 
-http.createServer(function(req, res) {
-  if (req.method === 'POST') {
-    var busboy = new Busboy({ headers: req.headers });
-    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
-      console.log('File [' + fieldname + ']: filename: ' + filename + ', encoding: ' + encoding + ', mimetype: ' + mimetype);
-      file.on('data', function(data) {
-        console.log('File [' + fieldname + '] got ' + data.length + ' bytes');
-      });
-      file.on('end', function() {
-        console.log('File [' + fieldname + '] Finished');
-      });
-    });
-    busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated) {
-      console.log('Field [' + fieldname + ']: value: ' + inspect(val));
-    });
-    busboy.on('finish', function() {
-      console.log('Done parsing form!');
-      res.writeHead(303, { Connection: 'close', Location: '/' });
-      res.end();
-    });
-    req.pipe(busboy);
-  } else if (req.method === 'GET') {
-    res.writeHead(200, { Connection: 'close' });
-    res.end('<html><head></head><body>\
-               <form method="POST" enctype="multipart/form-data">\
-                <input type="text" name="textfield"><br />\
-                <input type="file" name="filefield"><br />\
-                <input type="submit">\
-              </form>\
-            </body></html>');
+/*Configure the multer.*/
+
+app.use(multer({ dest: './FILES/',
+ rename: function (fieldname, filename) {
+    return filename+Date.now();
+  },
+onFileUploadStart: function (file) {
+  console.log(file.originalname + ' is starting ...')
+},
+onFileUploadComplete: function (file) {
+  console.log(file.fieldname + ' uploaded to  ' + file.path)
+  done=true;
+}
+}));
+
+/*Handling routes.*/
+
+app.get('/',function(req,res){
+      res.sendfile("index.html");
+});
+
+app.post('/api/upload',function(req,res){
+  if(done==true){
+    console.log(req.files);
+    res.end("File uploaded.");
   }
-}).listen(8000, function() {
-  console.log('Listening for requests');
+});
+
+/*Run the server.*/
+app.listen(8080,function(){
+    console.log("Working on port 8080");
 });
