@@ -2,7 +2,7 @@ var reader = require('./readFile.js');
 
 var cor = require('./correlation.js');
 
-reader.reader('FESH', function (trees) {
+reader.reader('../FILES/FESH', function (trees) {
 
 	//	console.log("tree1", trees[0]);
 	//	console.log("tree2", trees[0].data);

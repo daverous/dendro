@@ -5,7 +5,7 @@ var lineReader = require('line-reader');
 var endDelim = -9999;
 
 // First site param is optional
-exports.reader = function (file, cb, firstSite) {
+module.exports.reader = function (file, cb, firstSite) {
 	var curTreeId = null; // Current ID of tree that is being looked at
 	var treeData = {};
 	var trees = [];

@@ -66,19 +66,7 @@ var compareTwoTrees = function (treeOne, treeTwo, cb, err) {
 };
 
 
-var median = function (site) {
-	var siteCors = {};
-	for (var t in site.trees) { 
-		var siteCors = {};
-		for (var key in t.cors) {
-			if (! (key in siteCors)) {
-				siteCors[key] = [];
-			}
-						
-			siteCors[key].push(t.cors[key]);
-		}
-	}
-}
+
 
 
 
