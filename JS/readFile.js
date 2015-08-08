@@ -7,7 +7,7 @@ var endDelim = -9999;
 // First site param is optional
 module.exports.reader = function (file, cb, firstSite) {
 	var curTreeId = null; // Current ID of tree that is being looked at
-	var treeData = {};
+	var treeData = [];
 	var trees = [];
 	var curTreeCounter = 0; 
 	var curTreeStart = 0;
@@ -21,7 +21,7 @@ lineReader.eachLine(file, function(line, last) {
 			var rest = line.split(" ");
 			var actual = [];
 			for (var i = 1; i < rest.length; i++) {
-				if (rest[i] != '') {
+				if (rest[i].trim() != '') {
 					actual.push(rest[i].trim());
 				}
 			}				
@@ -35,7 +35,7 @@ lineReader.eachLine(file, function(line, last) {
 			for (var i = 1; i < actual.length; i++) {
 
 				if (actual[i] == endDelim) {
-//					console.log('here!');	
+
 						var toRet = 
 						{
 							id : id,
@@ -48,12 +48,13 @@ lineReader.eachLine(file, function(line, last) {
 						treeData = [];
 						curTreeId == null;
 						curTreeStart = 0;
-//						console.log(toRet);
 						trees.push(toRet);
 						continue;			
 					}
-					treeData[curTreeCounter] = Number(actual[i]);	
-					curTreeCounter++;
+					if (actual[i] != '') {
+						treeData.push(Number(actual[i]));	
+						curTreeCounter++;
+					}
 			}
 			if (last) {
 				if(firstSite != null)
@@ -68,4 +69,4 @@ lineReader.eachLine(file, function(line, last) {
 
 
 
-// console.log(read('FESH'));
+

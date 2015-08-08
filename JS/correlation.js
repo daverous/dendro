@@ -11,6 +11,7 @@ var firstDifference = function(array) {
 		n[c] = array[i] - array[i-1];
 		c++;
 	}
+
 	return n;
 		
 };
