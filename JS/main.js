@@ -12,15 +12,23 @@ reader.reader('./FILES/FESH', function (trees) {
 	reader.reader('./FILES/BAM', function(trees2) {
 	// console.log(compareTwoTrees(trees[0], trees2[0]));
 	// console.log(trees2);
-	compareTwoSites(trees,trees2, function(test) {
-		for (var i =0; i<test.length; i++) {
-		 console.log(test[i].id)
-		console.log(test[i].cors)
-		}
-	});
+	compareTwoSites(trees2,trees, testMean);
 	});
 });
 
+var testMean = function(test) {
+		var mean = 0;
+		var count = 0;
+		
+		for (var i =0; i<test.length; i++) {
+			for (var h =0; h<test[i].cors['BAM'].length; h++) {
+				mean += test[i].cors['BAM'][h].cor;
+				count++;
+		}
+		}
+		console.log(count);
+		console.log(mean/count);
+	};
 
 // Site one is assumed the test site, to be bound
 var compareTwoSites = function (siteTwo, siteOne, cb) {

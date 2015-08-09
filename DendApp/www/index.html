@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
+    <link rel="stylesheet" type="text/css" href="app_framework/2.1/css/icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+
+    <script src="intelxdk.js"></script>
+    <script src="cordova.js"></script>
+    <script src="xhr.js"></script>
+    <script src="xdk/init-dev.js"></script>
+    <script type="application/javascript" src="lib/jquery.min.js"></script>
+    <script type="application/javascript" src="marginal/marginal-position.min.js"></script>
+    <script type="application/javascript" src="js/app.js"></script>
+    <script type="application/javascript" src="js/init-app.js"></script>
+    <script type="application/javascript" src="js/index_user_scripts.js"></script>
+    <script type="application/javascript" src="xdk/ad/af_subpage.js"></script>
+    <script type="application/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script type="application/javascript" src="google_maps/google_maps.js"></script>
+  </head>
+
+  <body>
+    <div class="upage" id="mainpage">
+      <div class="upage-outer">
+        <div class="upage-content ac0 content-area vertical-col left">
+          <div class="grid grid-pad urow uib_row_1 row-height-1" data-uib="layout/row" data-ver="0">
+            <div class="col uib_col_1 col-0_12-12" data-uib="layout/col" data-ver="0">
+              <div class="widget-container content-area vertical-col left">
+
+                <div class="widget uib_w_5 d-margins" data-uib="media/text" data-ver="0">
+                  <div class="widget-container left-receptacle"></div>
+                  <div class="widget-container right-receptacle"></div>
+                  <div>
+                    <p>This is the view for the first Tab.</p>
+                  </div>
+                </div><span class="uib_shim"></span>
+              </div>
+            </div>
+            <span class="uib_shim"></span>
+          </div>
+        </div>
+        <div id="uib_page_3" class="upage-content vertical-col left hidden">
+          <div class="grid grid-pad urow uib_row_2 row-height-2" data-uib="layout/row" data-ver="0">
+            <div class="col uib_col_2 col-0_12-12" data-uib="layout/col" data-ver="0">
+              <div class="widget-container content-area vertical-col left">
+
+                <div class="widget uib_w_8 d-margins" data-uib="media/text" data-ver="0">
+                  <div class="widget-container left-receptacle"></div>
+                  <div class="widget-container right-receptacle"></div>
+                  <div>
+                    <p>This is the view for the second Tab.</p>
+                  </div>
+                </div><span class="uib_shim"></span>
+              </div>
+            </div>
+            <span class="uib_shim"></span>
+          </div>
+        </div>
+        <div id="uib_page_4" class="upage-content vertical-col left hidden">
+          <div class="grid grid-pad urow uib_row_3 row-height-3" data-uib="layout/row" data-ver="0">
+            <div class="col uib_col_3 col-0_12-12" data-uib="layout/col" data-ver="0">
+              <div class="widget-container content-area vertical-col left">
+
+                <div class="widget uib_w_9 d-margins" data-uib="media/text" data-ver="0">
+                  <div class="widget-container left-receptacle"></div>
+                  <div class="widget-container right-receptacle"></div>
+                  <div>
+                    <p>This is the view for the third Tab.</p>
+                  </div>
+                </div><span class="uib_shim"></span>
+              </div>
+            </div>
+            <span class="uib_shim"></span>
+          </div>
+        </div>
+        <div id="uib_page_5" class="upage-content vertical-col left hidden">
+          <div class="grid grid-pad urow uib_row_4 row-height-4" data-uib="layout/row" data-ver="0">
+            <div class="col uib_col_4 col-0_12-12" data-uib="layout/col" data-ver="0">
+              <div class="widget-container content-area vertical-col left">
+
+                <span class="uib_shim"></span>
+              </div>
+            </div>
+            <span class="uib_shim"></span>
+          </div>
+          <div class="sbs-container widget uib_w_10 d-margins" data-uib="layout/side_by_side" data-ver="0">
+            <div class="leftContent widget-container"></div>
+            <div class="rightContent widget-container"></div>
+          </div>
+          <div class="card_grid widget uib_w_11 wrapping-col d-margins flex-basis-11" data-uib="layout/card_grid" data-ver="0">
+            <div class="widget widget-container content-area vertical-col uib-card cpad-0 uib_w_12 section-dimension-12" data-uib="layout/card" data-ver="0"></div>
+            <div class="widget widget-container content-area vertical-col uib-card cpad-0 uib_w_13 section-dimension-13" data-uib="layout/card" data-ver="0">
+              <div class="widget uib_w_16 maps-size d-margins" data-uib="media/google_maps" data-ver="0" data-rpath="null" data-zoom="8"></div>
+            </div>
+            <div class="widget widget-container content-area vertical-col uib-card cpad-0 uib_w_14 section-dimension-14" data-uib="layout/card" data-ver="0"></div>
+            <div class="widget widget-container content-area vertical-col uib-card cpad-0 uib_w_15 section-dimension-15" data-uib="layout/card" data-ver="0"></div>
+          </div>
+        </div>
+        <div class="uib-footer uib-footer-fixed footer-bg container-group inner-element uib_w_2" data-uib="layout/footer" data-ver="0" id="af-footer-0">
+          <h2></h2>
+          <div class="widget-container wrapping-col single-centered">
+            <button class="btn widget uib_w_7 btn-default d-margins" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="home button-icon-left" data-position="left"></i>Home</button>
+            <button class="btn widget uib_w_6 btn-default d-margins" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="heart button-icon-left" data-position="left"></i>Favourites</button>
+            <button class="btn widget uib_w_3 btn-default d-margins" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="comment button-icon-left" data-position="left"></i>messages</button>
+            <button class="btn widget uib_w_4 btn-default d-margins" data-uib="twitter%20bootstrap/button" data-ver="1"><i class="user button-icon-left" data-position="left"></i>Profile</button>
+          </div>
+          <div class="widget-container content-area horiz-area wrapping-col left"></div>
+          <div class="widget-container content-area horiz-area wrapping-col right"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
