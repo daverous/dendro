@@ -35,15 +35,17 @@ lineReader.eachLine(file, function(line, last) {
 			for (var i = 1; i < actual.length; i++) {
 
 				if (actual[i] == endDelim) {
-
+						var site = file.split('/');
+						site = site[site.length-1].split('.')[0];
 						var toRet = 
 						{
 							id : id,
-							site: file.split('.')[0],
+							site: site,
 							start : curTreeStart,
 							cors : {},
 							data : treeData	
 						};
+						
 						//Reset params 
 						treeData = [];
 						curTreeId == null;
