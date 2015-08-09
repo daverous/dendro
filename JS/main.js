@@ -16,6 +16,8 @@ reader.reader('./FILES/FESH', function (trees) {
 	});
 });
 
+
+
 var testMean = function(test) {
 		var mean = 0;
 		var count = 0;
