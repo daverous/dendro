@@ -1,39 +1,33 @@
 /*Define dependencies.*/
 
 var express=require("express");
+var path = require('path');
 var multer  = require('multer');
 var app=express();
 var done=false;
 
+
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'jade');
 /*Configure the multer.*/
 
-app.use(multer({ dest: './FILES/',
- rename: function (fieldname, filename) {
-    return filename+Date.now();
-  },
-onFileUploadStart: function (file) {
-  console.log(file.originalname + ' is starting ...')
-},
-onFileUploadComplete: function (file) {
-  console.log(file.fieldname + ' uploaded to  ' + file.path)
-  done=true;
-}
-}));
+var upload = multer({ dest: './uploads/'});
 
 /*Handling routes.*/
 
 app.get('/',function(req,res){
-      res.sendfile("index.html");
+      res.render("index");
 });
 
-app.post('/api/upload',function(req,res){
-  if(done==true){
-    console.log(req.files);
-    res.end("File uploaded.");
-  }
-});
+app.post('/api/photo', upload.single('photo'), function (req, res, next) {
+  // req.files is array of `photos` files 
+  console.log('here');
+  res.send('done');
+  // req.body will contain the text fields, if there were any 
+})
+
 
 /*Run the server.*/
-app.listen(8080,function(){
-    console.log("Working on port 8080");
+app.listen(3000,function(){
+    console.log("Working on port 3000");
 });
