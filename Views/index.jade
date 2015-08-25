@@ -2,24 +2,41 @@ extends layout
 block title
 title Dendro Prov Software
 block content
+
     
-    script(src='https://maps.googleapis.com/maps/api/js')
+    script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_qqvfjv70eLnKgFkjml8zdXjs780eTCw&sensor=false")
     script(src='/public/js/maps.js')
+    
     body
     div.container
-        div.mainHeader
+        div.mainHeader 
             h1 Welcome to dendro software 
+
+    div.container-fluid(id="main")
         
-      
-    div.col-sm-6
-        form( id="uploadForm",enctype="multipart/form-data",action="/api/photo", method="post")
-            input(type="file" name="photo")
-            input(type="submit" value="Upload Image" name="submit")
-   
-    div.col-sm-6
-        h3 Google Map
-        #mapa
-            style="width:500px;height:500px;"
-        
-        // img(src="https://maps.googleapis.com/maps/api/staticmap?center=Opera+House,Sydney+Australia&zoom=13&size=400x300&markers=-33.8565,151.2151&sensor=false")   
+        div.row
+            #map
+            div.col-sm-8
+                    form( id="uploadForm",enctype="multipart/form-data",action="/api/photo", method="post")
+                        input(type="file" name="photo")
+                        input(type="submit" value="Upload Test Site" name="submit")
+                        
+                    form( id="networkUploat",enctype="multipart/form-data",action="/api/network", method="post")
+                        input(type="file" name="photo")
+                        input(type="submit" value="Upload Zip of Network" name="submit")
+                    // TODO do server side validatino that this is indeed a .zip file
+            div.col-sm-4
+
+        // h3 Google Map
+
+// <div id="map-canvas"></div>
+// <div class="container-fluid" id="main">
+//   <div class="row">
+//   	<div class="col-xs-8" id="left">
+//         <h2>Bootstrap Google Maps Demo</h2>
+//     </div>
+//     <div class="col-xs-4"><!--map-canvas will be postioned here--></div>
+//   </div>
+// </div>
+// img(src="https://maps.googleapis.com/maps/api/staticmap?center=Opera+House,Sydney+Australia&zoom=13&size=400x300&markers=-33.8565,151.2151&sensor=false")   
        

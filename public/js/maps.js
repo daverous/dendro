@@ -1,9 +1,10 @@
 
 function initMap() {
   
-  var map = new google.maps.Map(document.getElementById('mapa'), {
+  var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -34.397, lng: 150.644},
-    zoom: 3
+    zoom: 3,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   });
   console.log(map);
   var infoWindow = new google.maps.InfoWindow({map: map});
@@ -35,4 +36,10 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                         'Error: Your browser doesn\'t support geolocation.');
 }
 
-window.onload= initMap;
+google.maps.event.addDomListener(window, 'load', initMap);
+google.maps.event.addDomListener(window, "resize", function() {
+ var center = map.getCenter();
+ google.maps.event.trigger(map, "resize");
+ map.setCenter(center); 
+});
+// window.onload= initMap;

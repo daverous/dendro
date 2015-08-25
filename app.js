@@ -20,11 +20,12 @@ var upload = multer({ dest: './uploads/'});
 /*Handling routes.*/
 
 app.get('/',function(req,res){
-      var latlon = geohash.decodeGeoHash(req.params["id"]);
-      var lat = latlon.latitude[2];
-      res.render("index", {var latlon = geohash.decodeGeoHash(req.params["id"]);});
+      res.render("index");
 });
 
+app.get('/test', function(req,res) {
+  res.render("test");
+});
 app.post('/api/photo', upload.single('photo'), function (req, res, next) {
   // req.files is array of `photos` files 
   console.log('here');
