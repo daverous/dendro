@@ -1,12 +1,25 @@
-doctype html
-html
-head
-Dendro Prov Software
-body
-
-h1 
-    Welcome to dendro software 
-
-form( id="uploadForm",enctype="multipart/form-data",action="/api/photo", method="post")
-    input(type="file" name="photo")
-    input(type="submit" value="Upload Image" name="submit")
+extends layout
+block title
+title Dendro Prov Software
+block content
+    
+    script(src='https://maps.googleapis.com/maps/api/js')
+    script(src='/public/js/maps.js')
+    body
+    div.container
+        div.mainHeader
+            h1 Welcome to dendro software 
+        
+      
+    div.col-sm-6
+        form( id="uploadForm",enctype="multipart/form-data",action="/api/photo", method="post")
+            input(type="file" name="photo")
+            input(type="submit" value="Upload Image" name="submit")
+   
+    div.col-sm-6
+        h3 Google Map
+        #mapa
+            style="width:500px;height:500px;"
+        
+        // img(src="https://maps.googleapis.com/maps/api/staticmap?center=Opera+House,Sydney+Australia&zoom=13&size=400x300&markers=-33.8565,151.2151&sensor=false")   
+       
