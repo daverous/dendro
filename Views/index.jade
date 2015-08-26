@@ -8,15 +8,16 @@ block content
     script(src='/public/js/maps.js')
     
     body
-    div.container
-        div.mainHeader 
-            h1 Welcome to dendro software 
+    div.jumbotron
+        div.container
+            div.mainHeader 
+                h1 Welcome to dendro software 
 
     div.container-fluid(id="main")
         
         div.row
             #map
-            div.col-sm-8
+            div.col-sm-4
                     form( id="uploadForm",enctype="multipart/form-data",action="/api/photo", method="post")
                         input(type="file" name="photo")
                         input(type="submit" value="Upload Test Site" name="submit")
@@ -24,6 +25,11 @@ block content
                     form( id="networkUploat",enctype="multipart/form-data",action="/api/network", method="post")
                         input(type="file" name="photo")
                         input(type="submit" value="Upload Zip of Network" name="submit")
+                    div.radio
+                        label
+                            input(type="radio" name="optradio") 
+                            | Mean
+            div.col-sm-4              
                     // TODO do server side validatino that this is indeed a .zip file
             div.col-sm-4
 
