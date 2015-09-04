@@ -41,11 +41,13 @@ lineReader.eachLine(file, function(line, last) {
 						{
 							id : id,
 							site: site,
+							lat : 0,
+							long : 0,
 							start : curTreeStart,
 							cors : {},
 							data : treeData	
 						};
-						
+						// TODO export this to class.
 						//Reset params 
 						treeData = [];
 						curTreeId == null;

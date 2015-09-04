@@ -3,7 +3,8 @@ var unzip = require('unzip');
 
 module.exports = {
 	
-unzip : function(zipPath) {
+unzipper : function(zipPath, callback) {
 fs.createReadStream(zipPath).pipe(unzip.Extract({ path: 'upload/network' }));
+callback();
 }
 }
