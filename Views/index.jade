@@ -6,7 +6,7 @@ block content
     
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_qqvfjv70eLnKgFkjml8zdXjs780eTCw&sensor=false")
     script(src='/public/js/maps.js')
-
+    script(src='/public/js/utils.js')
     
     body
     div.jumbotron
@@ -21,7 +21,7 @@ block content
             #map
             div.col-sm-4
                 
-                form( id="uploadForm",enctype="multipart/form-data",action="/Calculate", method="post")
+                form( id="uploadForm",enctype="multipart/form-data",action="sendForm()", method="post")
                     
                     h4 Choose Test site (textFile)
                     input(type="file" name="testSite" required)
