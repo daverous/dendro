@@ -3,21 +3,32 @@ var reader = require('./readFile');
 var filesystem = require("fs");
 var cor = require('./correlation');
 
-reader.reader('./FILES/FESH', function (trees) {
-	// console.log(trees);
-	//	console.log("tree1", trees[0]);
-	//	console.log("tree2", trees[0].data);
-	// console.log(trees[0]);
-	// console.log(cor.fd(trees[0].data));
+// reader.reader('./FILES/FESH', function (trees) {
+// 	// console.log(trees);
+// 	//	console.log("tree1", trees[0]);
+// 	//	console.log("tree2", trees[0].data);
+// 	// console.log(trees[0]);
+// 	// console.log(cor.fd(trees[0].data));
 	
-	reader.reader('./FILES/BAM', function(trees2) {
-	// console.log(compareTwoTrees(trees[0], trees2[0]));
-	// console.log(trees2);
-	compareTwoSites(trees2,trees, testMean);
+// 	reader.reader('./FILES/BAM', function(trees2) {
+// 	// console.log(compareTwoTrees(trees[0], trees2[0]));
+// 	// console.log(trees2);
+// 	compareTwoSites(trees2,trees, testMean);
+// 	});
+// });
+module.exports = {
+	compareFilesAsSitesAndGetMean : compareFilesAsSitesAndGetMean
+}
+
+
+var compareFilesAsSitesAndGetMean = function(f1,f2, cb) {
+	 reader.reader(f1, function (trees) {
+	reader.reader(f2, function(trees2) {
+	var tree = compareTwoSites(trees2,trees);
+	return testMean(tree);
 	});
 });
-
-
+}
 
 var testMean = function(test) {
 		var mean = 0;
@@ -29,7 +40,6 @@ var testMean = function(test) {
 				count++;
 		}
 		}
-		console.log(count);
 		console.log(mean/count);
 	};
 
@@ -44,6 +54,8 @@ var compareTwoSites = function (siteTwo, siteOne, cb) {
 	// If Cb is specified, continue on from there 
 	if (cb)
 		cb(siteOne);
+	else 
+		return siteOne;
 };
 
 var compareTwoTrees = function (treeOne, treeTwo) {

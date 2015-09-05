@@ -5,6 +5,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var multer  = require('multer');
 var unz = require('./JS/unzip');
+var provF = require('./JS/provFuncs')
 var app=express();
 var done=false;
 
@@ -30,13 +31,19 @@ app.get('/test', function(req,res) {
   res.render("test");
 });
 app.post('/Calculate', upload.single('testsite'), function (req, res, next) {
+    console.log('In calculate');
     var testSite = req.files[0];
   upload.single('network'), function (req, res, next) {
-    unz.unzipper(req.files[1], function() {
-      var network = "uploads/network";
       
-    });
-  res.write('done');
+      var mean = provF.compareFilesAsSitesAndGetMean(testSite, req.files[1]);
+    // unz.unzipper(req.files[1], function() {
+    //   var network = "uploads/network";
+      
+    // });
+    // TODO right now network is just one file
+    console.log(mean);
+    res.status(200);
+    res.send(mean);
   // req.body will contain the text fields, if there were any 
 }});
 
@@ -46,7 +53,7 @@ app.listen(3000,function(){
     console.log("Working on port 3000");
     
     
-/ catch 404 and forward to error handler
+// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
