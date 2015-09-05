@@ -30,9 +30,13 @@ app.get('/',function(req,res){
 app.get('/test', function(req,res) {
   res.render("test");
 });
-app.post('/Calculate', upload.single('testsite'), function (req, res, next) {
+
+
+// TODO reimplement file uploads here
+app.post('/Calculate', upload.single('testSite'), function (req, res, next) {
     console.log('In calculate');
     var testSite = req.files[0];
+    console.log(req);
   upload.single('network'), function (req, res, next) {
       
       var mean = provF.compareFilesAsSitesAndGetMean(testSite, req.files[1]);
