@@ -9,43 +9,44 @@ block content
     script(src='/public/js/utils.js')
     
     body
-    div.jumbotron
-        div.page-header
-            div.container
-                div.mainHeader 
-                    h1 Welcome to dendro software 
-
-    div.container-fluid(id="main")
-        
-        div.row
-            #map
-            div.col-sm-4
-                
-                form( id="uploadForm",enctype="multipart/form-data",action="sendForm()", method="post")
+    div.container(ng-controller='mainCtrl')
+        div.jumbotron
+            div.page-header
+                div.container
+                    div.mainHeader 
+                        h1 Welcome to dendro software 
+    
+        div.container-fluid(id="main")
+            
+            div.row
+                #map
+                div.col-sm-4
                     
-                    h4 Choose Test site (textFile)
-                    input(type="file" name="testSite" required)
-                    h4 Choose Network site (.zip)
-                    input(type="file" name="network" required)
-                    h4 Choose Site position file (in format key,lat,long)
-                    input(type="file" name="position")
-                    // input(type="submit" value="Upload Zip of Network" name="submit")
-                    div.form-group
+                    form( id="uploadForm",enctype="multipart/form-data",action="sendForm()", method="post")
+                        
+                        h4 Choose Test site (textFile)
+                        input(type="file" name="testSite" required)
+                        h4 Choose Network site (.zip)
+                        input(type="file" name="network" required)
+                        h4 Choose Site position file (in format key,lat,long)
+                        input(type="file" name="position")
+                        // input(type="submit" value="Upload Zip of Network" name="submit")
+                        div.form-group
+                            div.radio
+                                label
+                                    input(type="radio" name="mean") 
+                                    | Mean
                         div.radio
-                            label
-                                input(type="radio" name="mean") 
-                                | Mean
-                       div.radio
-                            label
-                                input(type="radio" name="median") 
-                                | Median
-                input(type="submit" name="calculate" value="calculate" class="btn btn-default")
-            div.col-sm-4              
-                #output
-                    textarea(rows="1" cols="1" class="hidden")
-                
-                    // TODO do server side validatino that this is indeed a .zip file
-            div.col-sm-4
+                                label
+                                    input(type="radio" name="median") 
+                                    | Median
+                    input(type="submit" name="calculate" value="calculate" class="btn btn-default")
+                div.col-sm-4              
+                    #output
+                        textarea(rows="1" cols="1" class="hidden")
+                    
+                        // TODO do server side validatino that this is indeed a .zip file
+                div.col-sm-4
 
         // h3 Google Map
 
