@@ -2,7 +2,7 @@
 
 var express=require("express");
 var path = require('path');
-var busboy = require('connect-busboy');
+var multer  = require('multer')
 var favicon = require('serve-favicon');
 var fs = require('fs');
 var unz = require('./JS/unzip');
@@ -11,12 +11,13 @@ var app=express();
 
 var done=false;
 
+var upload = multer({ dest:  path.join(__dirname,'/uploads')})
 // https://github.com/blueimp/jQuery-File-Upload/blob/master/basic-plus.html
 app.set('views', path.join(__dirname, '/Views'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/public',  express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(busboy());
+
 
 app.set('view engine', 'jade');
 
@@ -43,24 +44,16 @@ app.get('/test', function(req,res) {
  * @apiSuccess {} Mean of calculation of both sites.
  * @apiSuccess {String} lastname  Lastname of the User.
  */
-app.post('/api/calculate', function (req, res, next) {
-    console.log('In calculate');
-    // var testSite = req.files[0];
-    // var network = req.files[1];
-    var fstream;
-    var mean = 0;
-    req.pipe(req.busboy);
-    req.busboy.on('file', function (fieldname, file, filename) {
-            console.log("Uploading: " + filename);
 
-            //Path where image will be uploaded
-            fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
-            file.pipe(fstream);
-            fstream.on('close', function () {    
-                console.log("Upload Finished of " + filename);              
-                res.redirect('back');           //where to go next
-            });
-        });
+var cpUpload = upload.fields([{ name: 'testSite', maxCount: 1 }, { name: 'network', maxCount: 1 }
+, {name: 'position', maxCount: 1} , {name: 'calc', maxCount :1},  {name: 'calculate', maxCount :1}]);
+
+app.post('/api/calculate', cpUpload, function (req, res, next) {
+    console.log('In calculate');
+    var testSite = req.files;
+    // var network = req.files[1];
+    var mean = 0;
+    console.log(req.files['testSite'][0]);
     // var mean = provF.compareFilesAsSitesAndGetMean(testSite, network);
     // unz.unzipper(req.files[1], function() {
     //   var network = "uploads/network";
