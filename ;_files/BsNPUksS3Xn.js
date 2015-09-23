@@ -1,0 +1,5 @@
+/*!CK:1860175558!*//*1440389274,*/
+
+if (self.CavalryLogger) { CavalryLogger.start_js(["fNdn4"]); }
+
+__d('MessengerContextInformationStore',['AsyncRequest','EventEmitter','Map','XMessengerContextBannerController'],function a(b,c,d,e,f,g,h,i,j,k){if(c.__markCompiled)c.__markCompiled();var l,m;'use strict';var n=new j(),o=new j();l=babelHelpers.inherits(p,i);m=l&&l.prototype;p.prototype.getOrFetch=function(q){var r=n.get(q);r||this.$MessengerContextInformationStore1(q);return r;};p.prototype.$MessengerContextInformationStore1=function(q){if(o.get(q))return;var r=k.getURIBuilder().setInt('profile_id',q).getURI(),s=new h().setAllowCrossPageTransition(true).setURI(r).setHandler(this.$MessengerContextInformationStore2.bind(this,q));o.set(q,s);s.send();};p.prototype.$MessengerContextInformationStore2=function(q,r){n.set(q,{connectionContext:r.payload.connection_context||'',contextItems:r.payload.context_items||[]});o['delete'](q);this.emit('change');};function p(){l.apply(this,arguments);}f.exports=new p();},null);
