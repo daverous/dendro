@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dendro Prov Software</title>
+	<!-- link(rel='stylesheet', href='../public/stylesheets/style.css')-->
+	<link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+	<link href="/bower_components/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+	<link href="/public/stylesheets/style.css" rel="stylesheet">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
+	<script src="/bower_components/jquery/dist/jquery.js"></script>
+
+	<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular.min.js"></script>-->
+	<!-- script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.6/angular-route.js")-->
+	<!--<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>-->
+	<!-- script(src="http://bouil.github.io/angular-google-chart/ng-google-chart.js")-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.13.0/amcharts.js"></script>
+</head>
+
+
+<body>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_qqvfjv70eLnKgFkjml8zdXjs780eTCw&amp;sensor=false"></script>
+	<script src="/public/js/maps.js"></script>
+	<script src="/public/js/utils.js"></script>
+
+<div class="jumbotron">
+	<div class="page-header">
+		<div class="container">
+			<div class="mainHeader">
+				<h1>Welcome to dendro software</h1>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="main" class="container-fluid">
+	<div class="row">
+		<div id="map"></div>
+		<div class="col-sm-4">
+			<form id="uploadForm" enctype="multipart/form-data" action="/api/calculate" method="post">
+				<h4>Choose Test site (textFile)</h4>
+				<input type="file" name="testSite" required>
+				<h4>Choose Network site (.zip)</h4>
+				<input type="file" name="network" required>
+				<h4>Choose Site position file (in format key,lat,long)</h4>
+				<input type="file" name="position"><!-- input(type="submit" value="Upload Zip of Network" name="submit")-->
+				<input type="radio" name="calc" id="mean">Mean<br>
+				<input type="radio" name="calc" id="median">Median<br>
+				<input type="submit" name="calculate" value="calculate" class="btn btn-default">
+			</form>
+		</div>
+		<div class="col-sm-4">
+			<div id="output"><textarea rows="1" cols="1" class="hidden"></textarea></div>
+		</div>
+		<div class="col-sm-4">
+		<!--TODO maybe for map-->
+		</div>
+		
+	</div>
+</div>
+</body>
+</html>

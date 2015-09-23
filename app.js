@@ -2,24 +2,24 @@
 
 var express=require("express");
 var path = require('path');
+var busboy = require('connect-busboy');
 var favicon = require('serve-favicon');
-var multer  = require('multer');
+var fs = require('fs');
 var unz = require('./JS/unzip');
 var provF = require('./JS/provFuncs')
 var app=express();
+
 var done=false;
 
 // https://github.com/blueimp/jQuery-File-Upload/blob/master/basic-plus.html
-app.set('views', path.join(__dirname, '/views'));
+app.set('views', path.join(__dirname, '/Views'));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use('/public',  express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-
+app.use(busboy());
 
 app.set('view engine', 'jade');
-/*Configure the multer.*/
 
-var upload = multer({ dest: './uploads/'});
 
 /*Handling routes.*/
 
@@ -33,23 +33,47 @@ app.get('/test', function(req,res) {
 
 
 // TODO reimplement file uploads here
-app.post('/Calculate', upload.single('testSite'), function (req, res, next) {
+/**
+ * @api {get} /user/:id Request User information
+ * @apiName GetUser
+ * @apiGroup User
+ *
+ * @apiParam {files} two files should be uploaded.
+ * @apiParam 
+ * @apiSuccess {} Mean of calculation of both sites.
+ * @apiSuccess {String} lastname  Lastname of the User.
+ */
+app.post('/api/calculate', function (req, res, next) {
     console.log('In calculate');
-    var testSite = req.files[0];
-    console.log(req);
-  upload.single('network'), function (req, res, next) {
-      
-      var mean = provF.compareFilesAsSitesAndGetMean(testSite, req.files[1]);
+    // var testSite = req.files[0];
+    // var network = req.files[1];
+    var fstream;
+    var mean = 0;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+            console.log("Uploading: " + filename);
+
+            //Path where image will be uploaded
+            fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
+            file.pipe(fstream);
+            fstream.on('close', function () {    
+                console.log("Upload Finished of " + filename);              
+                res.redirect('back');           //where to go next
+            });
+        });
+    // var mean = provF.compareFilesAsSitesAndGetMean(testSite, network);
     // unz.unzipper(req.files[1], function() {
     //   var network = "uploads/network";
       
     // });
+    // TODO check if mean or median was sent.
     // TODO right now network is just one file
     console.log(mean);
     res.status(200);
-    res.send(mean);
-  // req.body will contain the text fields, if there were any 
-}});
+    res.render('output', {
+            message: mean
+    });
+});
 
 
 /*Run the server.*/
@@ -68,23 +92,14 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
+// if (app.get('env') === 'development') {
+//     app.use(function(err, req, res, next) {
+//         res.status(err.status || 500);
+//         res.render('error', {
+//             message: err.message,
+//             error: err
+//         });
+//     });
+// }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
 });
