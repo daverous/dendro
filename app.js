@@ -51,12 +51,14 @@ var cpUpload = upload.fields([{ name: 'testSite', maxCount: 1 }, { name: 'networ
 app.post('/api/calculate', cpUpload, function (req, res, next) {
     console.log('In calculate');
 
-    var mean = 0;
-    provF.compareFilesAsSitesAndGetMean(req.files['testSite'][0].path, req.files['network'][0].path, function(mean) {
-       console.log("mean here:" + mean);
+    
+    console.log();
+        var result = 0;
+        provF.compareFilesAsSitesAndGetRes(req.files['testSite'][0].path, req.files['network'][0].path, req.body.calc, function(result) {
+       console.log("result here:" + result);
         res.status(200);
         res.render('output', {
-            message: mean
+            message: result
     }); 
     });
     // unz.unzipper(req.files[1], function() {

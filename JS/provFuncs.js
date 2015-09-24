@@ -1,6 +1,6 @@
 var reader = require('./readFile');
 
-var math = require("math");
+var math = require("mathjs");
 var filesystem = require("fs");
 var cor = require('./correlation');
 
@@ -20,13 +20,20 @@ var cor = require('./correlation');
 
 
 
-var compareFilesAsSitesAndGetMean = function(f1,f2, cb) {
+var compareFilesAsSitesAndGetRes = function(f1,f2, op, cb) {
 	// console.log(f2)
 	// trees is object for site1 (testsite), tree2 is object for site2
 	 reader.reader(f1, function (trees) {
 	reader.reader(f2, function(trees2) {
 	var tree = compareTwoSites(trees2,trees);
-	cb(meanForTwoSites(tree, trees2[0].site));
+	if (op == 'mean') {
+		console.log('calculating mean')
+		cb(meanForTwoSites(tree, trees2[0].site)); 
+	}
+	else {
+		console.log('calculating median')
+		cb(medianForTwoSites(tree, trees2[0].site));
+	}
 	});
 });
 }
@@ -56,7 +63,7 @@ var medianForTwoSites = function(test, siteName) {
 		
 		for (var i =0; i<test.length; i++) {
 			for (var h =0; h<test[i].cors[siteName].length; h++) {
-				temp.push += test[i].cors[siteName][h].cor;		
+				temp.push(test[i].cors[siteName][h].cor);		
 		}
 		}
 		// console.log(mean/count);
@@ -175,5 +182,5 @@ var getAllnetworks = function(networkDir) {
 };
 
 module.exports = {
-	compareFilesAsSitesAndGetMean : compareFilesAsSitesAndGetMean
+	compareFilesAsSitesAndGetRes : compareFilesAsSitesAndGetRes
 };
