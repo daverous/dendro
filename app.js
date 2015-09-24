@@ -50,22 +50,22 @@ var cpUpload = upload.fields([{ name: 'testSite', maxCount: 1 }, { name: 'networ
 
 app.post('/api/calculate', cpUpload, function (req, res, next) {
     console.log('In calculate');
-    var testSite = req.files;
-    // var network = req.files[1];
+
     var mean = 0;
-    console.log(req.files['testSite'][0]);
-    // var mean = provF.compareFilesAsSitesAndGetMean(testSite, network);
+    provF.compareFilesAsSitesAndGetMean(req.files['testSite'][0].path, req.files['network'][0].path, function(mean) {
+       console.log("mean here:" + mean);
+        res.status(200);
+        res.render('output', {
+            message: mean
+    }); 
+    });
     // unz.unzipper(req.files[1], function() {
     //   var network = "uploads/network";
       
     // });
     // TODO check if mean or median was sent.
     // TODO right now network is just one file
-    console.log(mean);
-    res.status(200);
-    res.render('output', {
-            message: mean
-    });
+    
 });
 
 

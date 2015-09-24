@@ -35,8 +35,7 @@ lineReader.eachLine(file, function(line, last) {
 			for (var i = 1; i < actual.length; i++) {
 
 				if (actual[i] == endDelim) {
-						var site = file.split('/');
-						site = site[site.length-1].split('.')[0];
+						var site = id.split(/\d+/)[0].replace(',', '');
 						var toRet = 
 						{
 							id : id,

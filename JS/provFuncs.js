@@ -1,5 +1,6 @@
 var reader = require('./readFile');
 
+var math = require("math");
 var filesystem = require("fs");
 var cor = require('./correlation');
 
@@ -16,33 +17,51 @@ var cor = require('./correlation');
 // 	compareTwoSites(trees2,trees, testMean);
 // 	});
 // });
-module.exports = {
-	compareFilesAsSitesAndGetMean : compareFilesAsSitesAndGetMean
-}
+
 
 
 var compareFilesAsSitesAndGetMean = function(f1,f2, cb) {
+	// console.log(f2)
+	// trees is object for site1 (testsite), tree2 is object for site2
 	 reader.reader(f1, function (trees) {
 	reader.reader(f2, function(trees2) {
 	var tree = compareTwoSites(trees2,trees);
-	return testMean(tree);
+	cb(meanForTwoSites(tree, trees2[0].site));
 	});
 });
 }
 
-var testMean = function(test) {
+
+// param test is test site object
+// param siteName is string of 
+var meanForTwoSites = function(test, siteName) {
+		// console.log(test);
 		var mean = 0;
 		var count = 0;
 		
 		for (var i =0; i<test.length; i++) {
-			for (var h =0; h<test[i].cors['BAM'].length; h++) {
-				mean += test[i].cors['BAM'][h].cor;
+			for (var h =0; h<test[i].cors[siteName].length; h++) {
+				mean += test[i].cors[siteName][h].cor;
 				count++;
 		}
 		}
-		console.log(mean/count);
+		// console.log(mean/count);
+		return mean/count;
 	};
 
+var medianForTwoSites = function(test, siteName) {
+		// console.log(test);
+		var median = 0;
+		var temp = [];
+		
+		for (var i =0; i<test.length; i++) {
+			for (var h =0; h<test[i].cors[siteName].length; h++) {
+				temp.push += test[i].cors[siteName][h].cor;		
+		}
+		}
+		// console.log(mean/count);
+		return math.median(temp);
+	};
 // Site one is assumed the test site, to be bound
 var compareTwoSites = function (siteTwo, siteOne, cb) {
 	for (var i = 0; i < siteOne.length; i++) {
@@ -153,4 +172,8 @@ var getAllnetworks = function(networkDir) {
 
 
 
+};
+
+module.exports = {
+	compareFilesAsSitesAndGetMean : compareFilesAsSitesAndGetMean
 };
