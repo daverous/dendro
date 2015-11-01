@@ -1,9 +1,9 @@
 var reader = require('./readFile');
 
 var math = require("mathjs");
-var filesystem = require("fs");
+var fs = require("fs");
 var cor = require('./correlation');
-
+var unzip = require('./unzip');
 // reader.reader('./FILES/FESH', function (trees) {
 // 	// console.log(trees);
 // 	//	console.log("tree1", trees[0]);
@@ -18,6 +18,61 @@ var cor = require('./correlation');
 // 	});
 // });
 
+
+var walk = function (op, trees, done) {
+	var dir = 'upload/network';
+    fs.readdir(dir, function (error, list) {
+        if (error) {
+            return done(error);
+        }
+
+        var i = 0;
+
+        (function next () {
+            var file = list[i++];
+
+            if (!file) {
+                return done(null);
+            }
+            
+            file = dir + '/' + file;
+            
+            fs.stat(file, function (error, stat) {
+        
+                if (stat && stat.isDirectory()) {
+                    walk(file, function (error) {
+                        next();
+                    });
+                } else {
+					reader.reader(file, function (trees2) {
+                    var tree = compareTwoSites(trees2,trees);
+					if (op == 'mean') {
+						console.log('calculating mean')
+						done(meanForTwoSites(tree, trees2[0].site)); 
+					}
+					else {
+						console.log('calculating median')
+						done(medianForTwoSites(tree, trees2[0].site));
+					}
+					});
+                    console.log(file);
+                    next();
+                }
+            });
+        })();
+    });
+};
+
+
+
+// function same as one below but unzips too
+var compareFilesAsSitesAndGetResNetwork = function(f1,zip, op, cb) {
+	// console.log(f2)
+	// trees is object for site1 (testsite), tree2 is object for site2
+	 reader.reader(f1, function (trees) {
+		 unzip.unzipper(zip, walk(op, trees, cb));
+});
+};
 
 
 var compareFilesAsSitesAndGetRes = function(f1,f2, op, cb) {
@@ -58,7 +113,6 @@ var meanForTwoSites = function(test, siteName) {
 
 var medianForTwoSites = function(test, siteName) {
 		// console.log(test);
-		var median = 0;
 		var temp = [];
 		
 		for (var i =0; i<test.length; i++) {
@@ -173,7 +227,7 @@ var prov = function (testSite, network, cb) {
 var getAllnetworks = function(networkDir) {
 	// TODO for each file in network, compare and store output.
 
-    filesystem.readdirSync(networkDir).forEach(function(file) {
+    fs.readdirSync(networkDir).forEach(function(file) {
 		
 	});
 
@@ -182,5 +236,6 @@ var getAllnetworks = function(networkDir) {
 };
 
 module.exports = {
-	compareFilesAsSitesAndGetRes : compareFilesAsSitesAndGetRes
+	compareFilesAsSitesAndGetRes : compareFilesAsSitesAndGetRes,
+	compareFilesAsSitesAndGetResNetwork : compareFilesAsSitesAndGetResNetwork
 };

@@ -5,6 +5,6 @@ module.exports = {
 	
 unzipper : function(zipPath, callback) {
 fs.createReadStream(zipPath).pipe(unzip.Extract({ path: 'upload/network' }));
-callback();
+callback;
 }
 }
