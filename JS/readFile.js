@@ -4,6 +4,25 @@ var lineReader = require('line-reader');
 
 var endDelim = -9999;
 
+
+
+
+ module.exports.locationReader = function(file, cb) {
+	 
+	//  sitelocations['ABE'] = [lat,long]
+	 var siteLocations = []
+	lineReader.eachLine(file, function(line, last) {
+		var split = line.split(",");
+		siteLocations[split[0]] = [split[1],split[2]];
+	
+	if (last) {
+				if(siteLocations != null)
+					cb(siteLocations);
+	}	
+	}); 
+ };
+
+
 // First site param is optional
 module.exports.reader = function (file, cb, firstSite) {
 	var curTreeId = null; // Current ID of tree that is being looked at
