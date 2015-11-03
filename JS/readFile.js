@@ -5,7 +5,13 @@ var lineReader = require('line-reader');
 var endDelim = -9999;
 
 
-
+function LocationFileError() {
+  this.name = 'LocationFileError';
+  this.message = 'Location file not formatted correctly';
+  this.stack = (new Error()).stack;
+}
+LocationFileError.prototype = Object.create(Error.prototype);
+LocationFileError.prototype.constructor = LocationFileError;
 
  module.exports.locationReader = function(file, cb) {
 	 
@@ -13,6 +19,9 @@ var endDelim = -9999;
 	 var siteLocations = []
 	lineReader.eachLine(file, function(line, last) {
 		var split = line.split(",");
+		if (split.length !=3) {
+			throw new LocationFileError();
+		}
 		siteLocations[split[0]] = [split[1],split[2]];
 	
 	if (last) {
