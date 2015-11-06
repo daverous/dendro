@@ -54,7 +54,7 @@ app.post('/api/calculate', cpUpload, function (req, res, next) {
     
     console.log();
         var result = 0;
-        provF.compareFilesAsSitesAndGetResNetwork(req.files['testSite'][0].path, req.files['network'][0].path, req.body.calc, function(result) {
+        provF.compareFilesAsSitesAndGetResNetwork(req.files['testSite'][0].path, req.files['network'][0].path, req.files['position'][0].path, req.body.calc, function(result) {
        console.log("result here:" + result);
         res.status(200);
         res.render('output', {

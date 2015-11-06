@@ -3,7 +3,9 @@ var reader = require('./readFile');
 var math = require("mathjs");
 var fs = require("fs");
 var cor = require('./correlation');
+var walk = require('fs-walk');
 var unzip = require('./unzip');
+var settings = require('./settings');
 // reader.reader('./FILES/FESH', function (trees) {
 // 	// console.log(trees);
 // 	//	console.log("tree1", trees[0]);
@@ -19,59 +21,41 @@ var unzip = require('./unzip');
 // });
 
 
-var walk = function (op, trees, done) {
-	var dir = 'upload/network';
-    fs.readdir(dir, function (error, list) {
-        if (error) {
-            return done(error);
-        }
 
-        var i = 0;
-
-        (function next () {
-            var file = list[i++];
-
-            if (!file) {
-                return done(null);
-            }
-            
-            file = dir + '/' + file;
-            
-            fs.stat(file, function (error, stat) {
-        
-                if (stat && stat.isDirectory()) {
-                    walk(file, function (error) {
-                        next();
-                    });
-                } else {
-					reader.reader(file, function (trees2) {
+var walker = function(op, trees, cb)  {
+	console.log(settings.networkUploadDirectory);
+walk.dirs('/etc', function(settings.networkUploadDirectory, filename, stat) {
+	
+walk.files(settings.networkUploadDirectory, function(basedir, filename, stat) {
+                 	console.log(filename);
+					reader.reader(filename, function (trees2) {
                     var tree = compareTwoSites(trees2,trees);
 					if (op == 'mean') {
 						console.log('calculating mean')
-						done(meanForTwoSites(tree, trees2[0].site)); 
+						cb(meanForTwoSites(tree, trees2[0].site)); 
 					}
 					else {
 						console.log('calculating median')
-						done(medianForTwoSites(tree, trees2[0].site));
+						cb(medianForTwoSites(tree, trees2[0].site));
 					}
 					});
-                    console.log(file);
-                    next();
-                }
+                    console.log(filename);
+                    cb();
+                
             });
-        })();
-    });
+
 };
 
 
-
 // function same as one below but unzips too
-var compareFilesAsSitesAndGetResNetwork = function(f1,zip, op, cb) {
+var compareFilesAsSitesAndGetResNetwork = function(f1,zip,location, op, cb) {
 	// console.log(f2)
 	// trees is object for site1 (testsite), tree2 is object for site2
+	 reader.locationReader(location,function(locationInfo) {
 	 reader.reader(f1, function (trees) {
-		 unzip.unzipper(zip, walk(op, trees, cb));
-});
+		 unzip.unzipper(zip, walker(op, trees, cb));
+})
+	 });
 };
 
 
