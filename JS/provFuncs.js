@@ -24,8 +24,6 @@ var settings = require('./settings');
 
 var walker = function(op, trees, cb)  {
 	console.log(settings.networkUploadDirectory);
-walk.dirs('/etc', function(settings.networkUploadDirectory, filename, stat) {
-	
 walk.files(settings.networkUploadDirectory, function(basedir, filename, stat) {
                  	console.log(filename);
 					reader.reader(filename, function (trees2) {
