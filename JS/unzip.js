@@ -21,8 +21,10 @@ module.exports = {
 	
 unzipper : function(zipPath, callback) {
 	deleteFolderRecursive(settings.networkUploadDirectory);
-fs.createReadStream(zipPath).pipe(unzip.Extract({ path: settings.networkUploadDirectory }));
-callback;
+    console.log(settings.networkUploadDirectory);
+    fs.createReadStream(zipPath).pipe(unzip.Extract({ path: settings.networkUploadDirectory }));
+
+
 }
 }
 
