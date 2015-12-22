@@ -23,8 +23,8 @@ var settings = require('./settings');
 
 
 var walker = function(op, trees, cb)  {
-	console.log(settings.networkUploadDirectory);
-walk.filesSync(settings.networkUploadDirectory, function(basedir, filename, stat) {
+    console.log('in walker');
+    walk.filesSync(settings.networkUploadDirectory, function(basedir, filename, stat) {
 					reader.reader(filename, function (trees2) {
                     var tree = compareTwoSites(trees2,trees);
 					if (op == 'mean') {
@@ -51,8 +51,7 @@ var compareFilesAsSitesAndGetResNetwork = function(f1,zip,location, op, cb) {
 	 reader.locationReader(location,function(locationInfo) {
 	 reader.reader(f1, function (trees) {
          console.log(zip);
-		 unzip.unzipper(zip);
-         walker(op, trees, cb);
+		 unzip.unzipper(zip,walker(op, trees, cb));
 })
 	 });
 };
